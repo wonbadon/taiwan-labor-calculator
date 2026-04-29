@@ -45,8 +45,8 @@ export default function About() {
       <section className="grid gap-6 xl:grid-cols-[1.05fr,0.95fr]">
         <div className="section-card">
           <p className="page-eyebrow">站點定位</p>
-          <h2 className="mt-3 text-2xl font-extrabold text-white">這是一個公開資訊整理站，不是官方窗口</h2>
-          <ul className="site-list mt-5 space-y-3 text-sm leading-7 text-slate-300">
+          <h2 className="mt-3 text-2xl font-extrabold text-slate-950">這是一個公開資訊整理站，不是官方窗口</h2>
+          <ul className="site-list mt-5 space-y-3 text-sm leading-7 text-slate-600">
             {principles.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -55,8 +55,8 @@ export default function About() {
 
         <div className="section-card">
           <p className="page-eyebrow">資料來源</p>
-          <h2 className="mt-3 text-2xl font-extrabold text-white">目前內容主要依這些公開資料整理</h2>
-          <ul className="site-list mt-5 space-y-3 text-sm leading-7 text-slate-300">
+          <h2 className="mt-3 text-2xl font-extrabold text-slate-950">目前內容主要依這些公開資料整理</h2>
+          <ul className="site-list mt-5 space-y-3 text-sm leading-7 text-slate-600">
             {sources.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -66,10 +66,10 @@ export default function About() {
 
       <section className="section-card">
         <p className="page-eyebrow">目前邊界</p>
-        <h2 className="mt-3 text-2xl font-extrabold text-white">以下這些情況，不應只靠本站結果直接下判斷</h2>
+        <h2 className="mt-3 text-2xl font-extrabold text-slate-950">以下這些情況，不應只靠本站結果直接下判斷</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {boundaries.map((item) => (
-            <div key={item} className="metric-tile h-full text-sm leading-7 text-slate-300">
+            <div key={item} className="metric-tile h-full text-sm leading-7 text-slate-600">
               {item}
             </div>
           ))}
@@ -80,9 +80,9 @@ export default function About() {
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="page-eyebrow">接著去哪</p>
-            <h2 className="mt-2 text-2xl font-extrabold text-white">如果你還在找入口，先從這幾頁開始</h2>
+            <h2 className="mt-2 text-2xl font-extrabold text-slate-950">如果你還在找入口，先從這幾頁開始</h2>
           </div>
-          <p className="max-w-2xl text-sm leading-7 text-slate-300">
+          <p className="max-w-2xl text-sm leading-7 text-slate-600">
             這幾頁會把本站怎麼使用、哪種情境該進哪個工具，以及哪些口徑最常出錯，先整理給你看。
           </p>
         </div>
@@ -92,10 +92,10 @@ export default function About() {
             <Link
               key={to}
               to={to}
-              className="metric-tile block h-full transition duration-200 hover:-translate-y-1 hover:bg-white/10"
+              className="metric-tile block h-full transition duration-200 hover:-translate-y-1 hover:bg-sky-50"
             >
-              <h3 className="text-xl font-extrabold text-white">{label}</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-300">{desc}</p>
+              <h3 className="text-xl font-extrabold text-slate-950">{label}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{desc}</p>
             </Link>
           ))}
         </div>

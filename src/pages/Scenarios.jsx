@@ -95,18 +95,18 @@ export default function Scenarios() {
 
       <section className="section-card">
         <p className="page-eyebrow">出勤類型</p>
-        <h2 className="mt-3 text-2xl font-extrabold text-white">加班、休息日、國定假日，不是同一件事</h2>
+        <h2 className="mt-3 text-2xl font-extrabold text-slate-950">加班、休息日、國定假日，不是同一件事</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {attendanceCases.map(({ title, law, desc, action, to }) => (
             <Link
               key={title}
               to={to}
-              className="metric-tile block h-full transition duration-200 hover:-translate-y-1 hover:bg-white/10"
+              className="metric-tile block h-full transition duration-200 hover:-translate-y-1 hover:bg-sky-50"
             >
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-300/80">{law}</p>
-              <h3 className="mt-3 text-xl font-extrabold text-white">{title}</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-300">{desc}</p>
-              <p className="mt-4 text-sm font-semibold text-sky-200">{action}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-700">{law}</p>
+              <h3 className="mt-3 text-xl font-extrabold text-slate-950">{title}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{desc}</p>
+              <p className="mt-4 text-sm font-semibold text-sky-700">{action}</p>
             </Link>
           ))}
         </div>
@@ -114,16 +114,16 @@ export default function Scenarios() {
 
       <section className="section-card">
         <p className="page-eyebrow">離職類型</p>
-        <h2 className="mt-3 text-2xl font-extrabold text-white">不是所有離職都叫做資遣</h2>
+        <h2 className="mt-3 text-2xl font-extrabold text-slate-950">不是所有離職都叫做資遣</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {exitCases.map(({ title, desc, to }) => (
             <Link
               key={title}
               to={to}
-              className="metric-tile block h-full transition duration-200 hover:-translate-y-1 hover:bg-white/10"
+              className="metric-tile block h-full transition duration-200 hover:-translate-y-1 hover:bg-sky-50"
             >
-              <h3 className="text-xl font-extrabold text-white">{title}</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-300">{desc}</p>
+              <h3 className="text-xl font-extrabold text-slate-950">{title}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{desc}</p>
             </Link>
           ))}
         </div>
@@ -133,16 +133,16 @@ export default function Scenarios() {
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="page-eyebrow">快速對照</p>
-            <h2 className="mt-2 text-2xl font-extrabold text-white">你的情境，先看哪一頁</h2>
+            <h2 className="mt-2 text-2xl font-extrabold text-slate-950">你的情境，先看哪一頁</h2>
           </div>
-          <p className="max-w-2xl text-sm leading-7 text-slate-300">
+          <p className="max-w-2xl text-sm leading-7 text-slate-600">
             這裡不是完整法條解釋，而是快速分流表。先找對頁面，再進一步看對應工具與提醒。
           </p>
         </div>
 
         <div className="table-shell mt-6 overflow-x-auto">
-          <table className="min-w-full text-left text-sm text-slate-300">
-            <thead className="border-b border-white/10 bg-white/5 text-xs uppercase tracking-[0.18em] text-slate-400">
+          <table className="min-w-full text-left text-sm text-slate-600">
+            <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-400">
               <tr>
                 <th className="px-4 py-3 font-semibold">你現在遇到的情境</th>
                 <th className="px-4 py-3 font-semibold">先看哪一頁</th>
@@ -151,12 +151,12 @@ export default function Scenarios() {
             </thead>
             <tbody>
               {mappingRows.map(({ situation, page, check, to }) => (
-                <tr key={situation} className="border-b border-white/10 last:border-b-0">
-                  <td className="px-4 py-4 align-top leading-7 text-slate-200">{situation}</td>
+                <tr key={situation} className="border-b border-slate-200 last:border-b-0">
+                  <td className="px-4 py-4 align-top leading-7 text-slate-700">{situation}</td>
                   <td className="px-4 py-4 align-top">
-                    <Link to={to} className="font-semibold text-sky-200 transition hover:text-sky-100">{page}</Link>
+                    <Link to={to} className="font-semibold text-sky-700 transition hover:text-sky-800">{page}</Link>
                   </td>
-                  <td className="px-4 py-4 align-top leading-7 text-slate-400">{check}</td>
+                  <td className="px-4 py-4 align-top leading-7 text-slate-500">{check}</td>
                 </tr>
               ))}
             </tbody>

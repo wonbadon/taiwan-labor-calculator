@@ -94,13 +94,13 @@ export default function FAQ() {
 
       <section className="section-card space-y-4">
         {faqs.map(({ q, a, to, cta }, index) => (
-          <details key={q} className="rounded-[22px] border border-white/10 bg-white/5 p-5" open={index === 0}>
-            <summary className="cursor-pointer text-lg font-extrabold text-white">{q}</summary>
-            <div className="mt-4 space-y-3 text-sm leading-7 text-slate-300">
+          <details key={q} className="rounded-[22px] border border-slate-200 bg-slate-50 p-5" open={index === 0}>
+            <summary className="cursor-pointer text-lg font-extrabold text-slate-950">{q}</summary>
+            <div className="mt-4 space-y-3 text-sm leading-7 text-slate-600">
               {a.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
-              <Link to={to} className="inline-flex pt-1 font-semibold text-sky-200 transition hover:text-sky-100">
+              <Link to={to} className="inline-flex pt-1 font-semibold text-sky-700 transition hover:text-sky-800">
                 {cta} →
               </Link>
             </div>

@@ -11,8 +11,8 @@ export default function NotFound() {
     <div className="mx-auto max-w-3xl space-y-6">
       <section className="section-card text-center">
         <p className="page-eyebrow">404</p>
-        <h1 className="mt-3 text-4xl font-extrabold text-white md:text-5xl">這一頁不存在</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
+        <h1 className="mt-3 text-4xl font-extrabold text-slate-950 md:text-5xl">這一頁不存在</h1>
+        <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-600 md:text-base">
           你可能走到舊連結，或網址輸入錯了。可以先回首頁重新選工具，或先看新手指南確認要進哪一頁。
         </p>
 

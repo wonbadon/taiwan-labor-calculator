@@ -33,15 +33,15 @@ export default function AnnualLeave() {
       </section>
 
       <div className="section-card space-y-6">
-        <div className="rounded-[22px] border border-sky-300/20 bg-sky-400/10 p-4">
-          <p className="text-sm font-semibold text-sky-100">試算口徑</p>
-          <p className="mt-2 text-sm leading-7 text-slate-200">
+        <div className="rounded-[22px] border border-sky-200 bg-sky-50 p-4">
+          <p className="text-sm font-semibold text-sky-800">試算口徑</p>
+          <p className="mt-2 text-sm leading-7 text-slate-700">
             這頁只處理法定年資門檻，不處理企業採周年制、曆年制、遞延折算或公司自訂優於法令的休假制度。
           </p>
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-semibold text-slate-200">到職日期</label>
+          <label className="mb-2 block text-sm font-semibold text-slate-700">到職日期</label>
           <input
             type="date"
             className="input-field"
@@ -51,26 +51,26 @@ export default function AnnualLeave() {
           />
         </div>
 
-        {error && <p className="text-sm text-rose-300">{error}</p>}
+        {error && <p className="text-sm text-rose-600">{error}</p>}
         <button onClick={calculate} className="btn-primary">計算特休天數</button>
       </div>
 
       {result && (
         <div className="section-card mb-6">
           <p className="page-eyebrow">試算結果</p>
-          <h2 className="mt-3 text-2xl font-extrabold text-white">目前法定特休資格</h2>
+          <h2 className="mt-3 text-2xl font-extrabold text-slate-950">目前法定特休資格</h2>
 
-          <div className="metric-tile mb-4 mt-5 text-sm text-slate-300">
-            目前年資：<span className="font-semibold text-white">
+          <div className="metric-tile mb-4 mt-5 text-sm text-slate-600">
+            目前年資：<span className="font-semibold text-slate-950">
               {Math.floor(result.yearsWorked)} 年{' '}
               {Math.round((result.yearsWorked % 1) * 12)} 個月
             </span>
           </div>
 
           {result.days === 0 ? (
-            <div className="rounded-[24px] border border-amber-300/20 bg-amber-400/10 p-5">
-              <p className="mb-1 font-semibold text-amber-100">尚未達到法定特休資格</p>
-              <p className="text-sm leading-7 text-amber-50/90">
+            <div className="rounded-[24px] border border-amber-200 bg-amber-50 p-5">
+              <p className="mb-1 font-semibold text-amber-800">尚未達到法定特休資格</p>
+              <p className="text-sm leading-7 text-amber-700">
                 還需 <span className="font-bold">{result.monthsToNext}</span> 個月後（滿6個月），
                 即可享有 <span className="font-bold">3天</span> 特休
               </p>
@@ -78,10 +78,10 @@ export default function AnnualLeave() {
           ) : (
             <>
               <div className="result-card flex justify-between items-center mb-4">
-                <span className="font-bold text-white">目前法定特休天數</span>
-                <span className="text-2xl font-bold text-sky-100">{result.days} 天</span>
+                <span className="font-bold text-slate-950">目前法定特休天數</span>
+                <span className="text-2xl font-bold text-sky-700">{result.days} 天</span>
               </div>
-              <div className="rounded-[22px] border border-emerald-300/20 bg-emerald-400/10 p-4 text-sm text-emerald-50/95">
+              <div className="rounded-[22px] border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
                 再 <span className="font-bold">{Math.ceil(result.monthsToNext)}</span> 個月後特休將升級為{' '}
                 <span className="font-bold">{result.nextDays} 天</span>
               </div>
@@ -96,7 +96,7 @@ export default function AnnualLeave() {
 
       <div className="section-card">
         <p className="page-eyebrow">法定對照表</p>
-        <h2 className="mt-3 text-2xl font-extrabold text-white">勞基法特休天數門檻</h2>
+        <h2 className="mt-3 text-2xl font-extrabold text-slate-950">勞基法特休天數門檻</h2>
         <div className="table-shell mt-5 overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -107,29 +107,29 @@ export default function AnnualLeave() {
             </thead>
             <tbody>
               {table.map(({ period, days }, i) => (
-                <tr key={period} className={i % 2 === 0 ? 'bg-white/0' : 'bg-white/5'}>
-                  <td className="border-t border-white/10 px-4 py-4 text-slate-200">{period}</td>
-                  <td className="border-t border-white/10 px-4 py-4 text-right font-semibold text-sky-200">{days} 天</td>
+                <tr key={period} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
+                  <td className="border-t border-slate-200 px-4 py-4 text-slate-700">{period}</td>
+                  <td className="border-t border-slate-200 px-4 py-4 text-right font-semibold text-sky-700">{days} 天</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        <div className="mt-5 space-y-2 text-sm text-slate-300">
-          <h3 className="font-semibold text-white">常見提醒</h3>
+        <div className="mt-5 space-y-2 text-sm text-slate-600">
+          <h3 className="font-semibold text-slate-950">常見提醒</h3>
           <div className="space-y-3">
             <div className="metric-tile">
               <p className="font-medium">特休未休完怎麼辦？</p>
-              <p className="mt-2 text-slate-300">年度終結或契約終止時，雇主應以工資補償未休特休天數（依日薪計算）。</p>
+              <p className="mt-2 text-slate-600">年度終結或契約終止時，雇主應以工資補償未休特休天數（依日薪計算）。</p>
             </div>
             <div className="metric-tile">
               <p className="font-medium">特休可以遞延嗎？</p>
-              <p className="mt-2 text-slate-300">勞雇雙方可協議在次一年度內使用，但仍須注意年度終結時的補償義務。</p>
+              <p className="mt-2 text-slate-600">勞雇雙方可協議在次一年度內使用，但仍須注意年度終結時的補償義務。</p>
             </div>
             <div className="metric-tile">
               <p className="font-medium">特休怎麼排？</p>
-              <p className="mt-2 text-slate-300">應由勞工自行排定，雇主不得強制指定時間，但可在不影響正常營運下協商調整。</p>
+              <p className="mt-2 text-slate-600">應由勞工自行排定，雇主不得強制指定時間，但可在不影響正常營運下協商調整。</p>
             </div>
           </div>
         </div>

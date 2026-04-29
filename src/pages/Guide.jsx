@@ -82,9 +82,9 @@ export default function Guide() {
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {steps.map(({ label, title, desc }) => (
             <div key={label} className="metric-tile h-full">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-300/80">{label}</p>
-              <h2 className="mt-3 text-xl font-extrabold text-white">{title}</h2>
-              <p className="mt-3 text-sm leading-7 text-slate-300">{desc}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-700">{label}</p>
+              <h2 className="mt-3 text-xl font-extrabold text-slate-950">{title}</h2>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{desc}</p>
             </div>
           ))}
         </div>
@@ -94,9 +94,9 @@ export default function Guide() {
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="page-eyebrow">快速入口</p>
-            <h2 className="mt-2 text-2xl font-extrabold text-white">四個工具，各自處理不同問題</h2>
+            <h2 className="mt-2 text-2xl font-extrabold text-slate-950">四個工具，各自處理不同問題</h2>
           </div>
-          <p className="max-w-2xl text-sm leading-7 text-slate-300">
+          <p className="max-w-2xl text-sm leading-7 text-slate-600">
             不要把加班、特休、資遣與勞退混在同一頁看。先進對頁面，才不會一開始就用錯法條口徑。
           </p>
         </div>
@@ -106,11 +106,11 @@ export default function Guide() {
             <Link
               key={to}
               to={to}
-              className="metric-tile block transition duration-200 hover:-translate-y-1 hover:border-sky-300/25 hover:bg-white/10"
+              className="metric-tile block transition duration-200 hover:-translate-y-1 hover:border-sky-200 hover:bg-sky-50"
             >
-              <p className="text-lg font-extrabold text-white">{title}</p>
-              <p className="mt-2 text-sm leading-7 text-slate-300">{desc}</p>
-              <p className="mt-4 text-sm font-semibold text-sky-200">直接進入試算 →</p>
+              <p className="text-lg font-extrabold text-slate-950">{title}</p>
+              <p className="mt-2 text-sm leading-7 text-slate-600">{desc}</p>
+              <p className="mt-4 text-sm font-semibold text-sky-700">直接進入試算 →</p>
             </Link>
           ))}
         </div>
@@ -119,8 +119,8 @@ export default function Guide() {
       <section className="grid gap-6 xl:grid-cols-2">
         <div className="section-card">
           <p className="page-eyebrow">輸入前檢查</p>
-          <h2 className="mt-3 text-2xl font-extrabold text-white">先確認這些欄位，錯誤率會低很多</h2>
-          <ul className="site-list mt-5 space-y-3 text-sm leading-7 text-slate-300">
+          <h2 className="mt-3 text-2xl font-extrabold text-slate-950">先確認這些欄位，錯誤率會低很多</h2>
+          <ul className="site-list mt-5 space-y-3 text-sm leading-7 text-slate-600">
             {checklist.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -129,8 +129,8 @@ export default function Guide() {
 
         <div className="section-card">
           <p className="page-eyebrow">最常犯錯</p>
-          <h2 className="mt-3 text-2xl font-extrabold text-white">這些誤用，會讓結果整個偏掉</h2>
-          <ul className="site-list mt-5 space-y-3 text-sm leading-7 text-slate-300">
+          <h2 className="mt-3 text-2xl font-extrabold text-slate-950">這些誤用，會讓結果整個偏掉</h2>
+          <ul className="site-list mt-5 space-y-3 text-sm leading-7 text-slate-600">
             {pitfalls.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -142,20 +142,20 @@ export default function Guide() {
         <div className="grid gap-5 xl:grid-cols-[1.1fr,0.9fr]">
           <div>
             <p className="page-eyebrow">下一步</p>
-            <h2 className="mt-3 text-2xl font-extrabold text-white">如果你還卡在「到底算哪一種」，先去看情境頁</h2>
-            <p className="mt-4 text-sm leading-7 text-slate-300">
+            <h2 className="mt-3 text-2xl font-extrabold text-slate-950">如果你還卡在「到底算哪一種」，先去看情境頁</h2>
+            <p className="mt-4 text-sm leading-7 text-slate-600">
               最常見的混淆點通常不是計算本身，而是前面就把情境分錯。像是把休息日和國定假日混為一談，或把資遣和自請離職放在同一套邏輯下看。
             </p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-1">
-            <Link to="/scenarios" className="metric-tile block transition duration-200 hover:bg-white/10">
-              <p className="text-lg font-extrabold text-white">看熱門情境比較</p>
-              <p className="mt-2 text-sm leading-7 text-slate-300">用情境對照表快速判斷現在應該先看哪個工具。</p>
+            <Link to="/scenarios" className="metric-tile block transition duration-200 hover:bg-sky-50">
+              <p className="text-lg font-extrabold text-slate-950">看熱門情境比較</p>
+              <p className="mt-2 text-sm leading-7 text-slate-600">用情境對照表快速判斷現在應該先看哪個工具。</p>
             </Link>
-            <Link to="/faq" className="metric-tile block transition duration-200 hover:bg-white/10">
-              <p className="text-lg font-extrabold text-white">看常見問題</p>
-              <p className="mt-2 text-sm leading-7 text-slate-300">把最容易疑惑的口徑、法條和例外情況先看一遍。</p>
+            <Link to="/faq" className="metric-tile block transition duration-200 hover:bg-sky-50">
+              <p className="text-lg font-extrabold text-slate-950">看常見問題</p>
+              <p className="mt-2 text-sm leading-7 text-slate-600">把最容易疑惑的口徑、法條和例外情況先看一遍。</p>
             </Link>
           </div>
         </div>

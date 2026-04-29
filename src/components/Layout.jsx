@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import AdSlot from './AdSlot'
+import { adsConfig } from '../config/ads'
 import { contentCatalog, featuredTools, toolCatalog } from '../data/toolCatalog'
 
 const toolLinks = toolCatalog.map(({ to, shortLabel, footerDesc }) => ({
@@ -140,6 +142,14 @@ export default function Layout({ children }) {
         : 'relative mx-auto flex-1 w-full max-w-6xl px-4 py-8 sm:px-6 md:py-10'}>
         {children}
       </main>
+
+      <AdSlot
+        key={isHome ? 'home-ad-slot' : `page-ad-slot-${pathname}`}
+        slot={isHome ? adsConfig.slots.home : adsConfig.slots.page}
+        className={isHome
+          ? 'mx-auto mt-2 max-w-6xl px-4 pb-4 sm:px-6'
+          : 'mx-auto mt-2 max-w-6xl px-4 sm:px-6'}
+      />
 
       {isHome ? (
         <footer className="relative border-t border-slate-200 bg-white text-slate-600">

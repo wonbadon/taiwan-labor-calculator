@@ -33,6 +33,13 @@ jobs:
         run: npm ci
 
       - name: Build site
+        env:
+          VITE_ADS_ENABLED: ${{ vars.VITE_ADS_ENABLED }}
+          VITE_ADS_DEBUG: ${{ vars.VITE_ADS_DEBUG }}
+          VITE_ADS_PROVIDER: ${{ vars.VITE_ADS_PROVIDER }}
+          VITE_ADSENSE_CLIENT: ${{ vars.VITE_ADSENSE_CLIENT }}
+          VITE_ADSENSE_HOME_SLOT: ${{ vars.VITE_ADSENSE_HOME_SLOT }}
+          VITE_ADSENSE_PAGE_SLOT: ${{ vars.VITE_ADSENSE_PAGE_SLOT }}
         run: npm run build
 
       - name: Configure Pages

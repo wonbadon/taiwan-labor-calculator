@@ -54,9 +54,12 @@ npm run sync:site -- "你的提交訊息"
 
 ### 啟用廣告系統
 
-1. 先向 Google AdSense 申請，並把網站網域設成：`https://wonbadon.github.io/taiwan-labor-calculator/`
+1. 如果你還在用目前這個 repo 的專案頁網址，先不要送 AdSense；它是子路徑站，通常不適合拿來當正式審核站點。
+2. 要走根網址方案，請改成 `https://wonbadon.github.io/`，再拿這個網址送 AdSense。
 2. 複製 `.env.example` 成 `.env`，讓你本機可以先預覽廣告版位
 3. 到 GitHub `Settings -> Secrets and variables -> Actions -> Variables`，新增下列變數，讓 GitHub Pages build 時也能帶入：
+
+	- `VITE_SITE_URL`
 
 	- `VITE_ADS_ENABLED`
 	- `VITE_ADS_DEBUG`
@@ -72,6 +75,7 @@ npm run sync:site -- "你的提交訊息"
 範例設定：
 
 ```bash
+VITE_SITE_URL=https://wonbadon.github.io/
 VITE_ADS_ENABLED=true
 VITE_ADS_DEBUG=false
 VITE_ADS_PROVIDER=adsense
@@ -84,6 +88,8 @@ VITE_ADSENSE_CONTENT_SLOT=1122334455
 開發時如果你想先看版位而不是真的載廣告，可以把 `VITE_ADS_DEBUG=true`，頁面會顯示 placeholder。
 
 GitHub Pages 正式站會使用 workflow 裡帶入的 Actions Variables；如果你只改本機 `.env`，正式站不會跟著更新。
+
+如果 build 時有帶 `VITE_ADSENSE_CLIENT`，repo 現在也會自動產生根目錄用的 `ads.txt`，內容會是 Google 要的標準格式。
 
 ### 版位策略
 
@@ -134,3 +140,33 @@ VITE_LEAD_CTA_SECONDARY_URL=https://你的模板或商品頁
 - 目前 canonical 已指向 GitHub Pages 網址，比較適合做 SEO 與廣告審核。
 - 免責聲明、關於本站、FAQ 都應保留，這些對審核與信任感有幫助。
 - 真正比較會賺的通常不是單靠廣告，而是「廣告 + 高意圖合作導流」。
+
+## 改成 wonbadon.github.io 根網址
+
+GitHub Pages 的根網址只能來自使用者站 repo，也就是 repo 名稱必須是 `wonbadon.github.io`。目前這個 repo 叫做 `taiwan-labor-calculator`，所以它只能掛在 `/taiwan-labor-calculator/` 子路徑下。
+
+最穩的搬法：
+
+1. 在 GitHub 建立一個新的公開 repo：`wonbadon.github.io`
+2. 把這個 repo 當成原始碼 repo 保留，新增第二個 remote 指向新的根站 repo
+3. 在本機執行：
+
+```bash
+git remote add user-site https://github.com/wonbadon/wonbadon.github.io.git
+git config sync.secondaryRemote user-site
+```
+
+4. 之後照常用：
+
+```bash
+npm run sync:site -- "你的提交訊息"
+```
+
+現在的同步腳本會先推 `origin`，如果你有設定 `sync.secondaryRemote`，也會一起推到根站 repo。
+
+這份程式也已經支援兩種網址：
+
+- 在 `wonbadon/taiwan-labor-calculator` repo build 時，canonical 會是 `https://wonbadon.github.io/taiwan-labor-calculator/`
+- 在 `wonbadon/wonbadon.github.io` repo build 時，canonical 會自動改成 `https://wonbadon.github.io/`
+
+也就是說，你不需要維護兩份不同程式碼，只需要多一個根站 repo 來承接同一份部署內容。

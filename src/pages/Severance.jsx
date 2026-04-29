@@ -1,11 +1,17 @@
 import { useState } from 'react'
 import { calcSeverance } from '../calculators/severance'
+import usePageMeta from '../hooks/usePageMeta'
 
 const fmt = (n) => Math.round(n).toLocaleString('zh-TW')
 
 const initialForm = { avgSalary: '', yearsNew: '', yearsOld: '' }
 
 export default function Severance() {
+  usePageMeta(
+    '資遣費計算機',
+    '依平均工資與新舊制年資，試算勞基法與勞退條例下的資遣費金額。',
+  )
+
   const [form, setForm] = useState(initialForm)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')

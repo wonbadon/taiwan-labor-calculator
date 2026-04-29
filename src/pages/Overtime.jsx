@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { calcOvertimeSummary } from '../calculators/overtime'
+import usePageMeta from '../hooks/usePageMeta'
 
 const fmt = (n) => Math.round(n).toLocaleString('zh-TW')
 
@@ -13,6 +14,11 @@ const initialForm = {
 }
 
 export default function Overtime() {
+  usePageMeta(
+    '加班費計算機',
+    '依勞基法第 24 條與第 39 條，試算平日延長工時、休息日與國定假日 / 休假日出勤金額。',
+  )
+
   const [form, setForm] = useState(initialForm)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')

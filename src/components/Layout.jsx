@@ -1,12 +1,24 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
+const toolLinks = [
+  { to: '/overtime', label: '算加班費', desc: '平日、休息日、國定假日 / 休假日出勤金額。' },
+  { to: '/annual-leave', label: '算特休天數', desc: '依到職日推算法定特休與下一個門檻。' },
+  { to: '/severance', label: '算資遣費', desc: '拆開新舊制年資，先抓合理金額區間。' },
+  { to: '/labor-pension', label: '算勞退', desc: '確認提繳級距、自提比例與長期累積。' },
+]
+
+const contentLinks = [
+  { to: '/guide', label: '新手指南', desc: '第一次使用本站時，先看情境怎麼分、資料怎麼備。' },
+  { to: '/scenarios', label: '情境比較', desc: '快速判斷平日、休息日、國定假日與離職場景差異。' },
+  { to: '/faq', label: '常見問題', desc: '整理最常被問到的計算口徑、法條與適用邊界。' },
+  { to: '/about', label: '關於本站', desc: '說明資料來源、更新邊界、免責定位與站點角色。' },
+]
+
 const navLinks = [
   { to: '/', label: '首頁' },
-  { to: '/overtime', label: '算加班費' },
-  { to: '/annual-leave', label: '算特休天數' },
-  { to: '/severance', label: '算資遣費' },
-  { to: '/labor-pension', label: '算勞退' },
+  { to: '/guide', label: '新手指南' },
+  ...toolLinks.map(({ to, label }) => ({ to, label })),
 ]
 
 const ownerName = 'wonbadon'
@@ -48,14 +60,6 @@ const disclaimerSections = [
       '引用本站內容時，請自行判斷是否仍與最新法規、函釋與主管機關說明一致。',
     ],
   },
-]
-
-const siteLinks = [
-  '首頁：先用情境選你要處理的是加班、特休、資遣還是勞退。',
-  '算加班費：處理平日延長工時、休息日與國定假日 / 休假日出勤。',
-  '算特休天數：確認法定門檻、目前資格與下一個里程碑。',
-  '算資遣費：拆開新舊制年資，避免把兩套規則混在一起。',
-  '算勞退：看提撥級距、自提比例與長期累積差異。',
 ]
 
 export default function Layout({ children }) {
@@ -162,7 +166,7 @@ export default function Layout({ children }) {
 
       {isHome ? (
         <footer className="relative border-t border-slate-200 bg-slate-950 text-slate-300">
-          <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.15fr,0.9fr,0.95fr]">
+          <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-2 xl:grid-cols-[1.05fr,0.8fr,0.8fr,0.95fr]">
             <div>
               <div className="flex items-center gap-3">
                 <span className="brand-mark" aria-hidden="true" />
@@ -176,7 +180,18 @@ export default function Layout({ children }) {
             <div>
               <h3 className="text-sm font-extrabold text-white">試算工具</h3>
               <ul className="mt-4 space-y-2 text-sm text-slate-400">
-                {navLinks.filter(({ to }) => to !== '/').map(({ to, label }) => (
+                {toolLinks.map(({ to, label }) => (
+                  <li key={to}>
+                    <Link to={to} className="transition hover:text-white">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-extrabold text-white">內容導覽</h3>
+              <ul className="mt-4 space-y-2 text-sm text-slate-400">
+                {contentLinks.map(({ to, label }) => (
                   <li key={to}>
                     <Link to={to} className="transition hover:text-white">{label}</Link>
                   </li>
@@ -242,9 +257,28 @@ export default function Layout({ children }) {
               <div className="mt-6 grid gap-4 xl:grid-cols-[0.95fr,1.05fr]">
                 <div className="metric-tile">
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300/80">網站功能導覽</p>
-                  <ul className="site-list mt-3 space-y-2 text-sm leading-7 text-slate-300">
-                    {siteLinks.map((item) => (
-                      <li key={item}>{item}</li>
+                  <ul className="site-list mt-3 space-y-4 text-sm leading-7 text-slate-300">
+                    <li>
+                      <Link to="/" className="font-semibold text-white transition hover:text-sky-200">首頁</Link>
+                      <p className="text-slate-400">先用首頁工具卡判斷你現在是加班、特休、資遣還是勞退情境。</p>
+                    </li>
+                    {toolLinks.map(({ to, label, desc }) => (
+                      <li key={to}>
+                        <Link to={to} className="font-semibold text-white transition hover:text-sky-200">{label}</Link>
+                        <p className="text-slate-400">{desc}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="metric-tile">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300/80">延伸內容</p>
+                  <ul className="site-list mt-3 space-y-4 text-sm leading-7 text-slate-300">
+                    {contentLinks.map(({ to, label, desc }) => (
+                      <li key={to}>
+                        <Link to={to} className="font-semibold text-white transition hover:text-amber-200">{label}</Link>
+                        <p className="text-slate-400">{desc}</p>
+                      </li>
                     ))}
                   </ul>
                 </div>

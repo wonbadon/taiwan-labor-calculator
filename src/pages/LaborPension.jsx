@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { calcLaborPension } from '../calculators/laborPension'
+import usePageMeta from '../hooks/usePageMeta'
 
 const fmt = (n) => Math.round(n).toLocaleString('zh-TW')
 
@@ -11,6 +12,11 @@ const initialForm = {
 }
 
 export default function LaborPension() {
+  usePageMeta(
+    '勞退退休金試算',
+    '依最新勞退提繳級距，試算雇主提撥、自提比例與長期退休金累積結果。',
+  )
+
   const [form, setForm] = useState(initialForm)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')

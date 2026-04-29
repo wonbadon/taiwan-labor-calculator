@@ -280,6 +280,22 @@
     @apply grid gap-5 md:grid-cols-2 xl:grid-cols-3;
   }
 
+  .home-directory-section {
+    @apply border-t border-slate-200/80 pt-12;
+  }
+
+  .home-directory-kicker {
+    @apply text-[11px] font-bold uppercase tracking-[0.22em] text-sky-600;
+  }
+
+  .home-directory-section-title {
+    @apply text-3xl font-extrabold tracking-[-0.04em] text-slate-950 md:text-4xl;
+  }
+
+  .home-directory-section-desc {
+    @apply text-base leading-8 text-slate-500;
+  }
+
   .home-directory-card {
     @apply relative block overflow-hidden rounded-[30px] border border-slate-200/90 bg-white/95 p-8 transition duration-200;
     box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -371,6 +387,61 @@
 
   .home-directory-card:hover .home-directory-arrow {
     transform: translate(2px, -2px);
+  }
+
+  .home-directory-support-grid {
+    @apply grid gap-5 md:grid-cols-2 xl:grid-cols-4;
+  }
+
+  .home-directory-support-card {
+    @apply relative block overflow-hidden rounded-[28px] border border-slate-200 bg-white/90 p-6 transition duration-200;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .home-directory-support-card:hover {
+    @apply border-sky-200 bg-white;
+    box-shadow: 0 16px 36px rgba(37, 99, 235, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.94);
+    transform: translateY(-3px);
+  }
+
+  .home-directory-support-eyebrow {
+    @apply text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400;
+  }
+
+  .home-directory-support-title {
+    @apply text-[1.55rem] font-extrabold leading-tight text-slate-950;
+  }
+
+  .home-directory-support-desc {
+    @apply text-sm leading-7 text-slate-500;
+  }
+
+  .home-directory-support-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .home-directory-support-list li {
+    position: relative;
+    padding-left: 0.95rem;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    color: #475569;
+  }
+
+  .home-directory-support-list li + li {
+    margin-top: 0.45rem;
+  }
+
+  .home-directory-support-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.68rem;
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 999px;
+    background: #38bdf8;
   }
 
   .notice-card {

@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import { calcAnnualLeave, getLeaveTable } from '../calculators/annualLeave'
+import usePageMeta from '../hooks/usePageMeta'
 
 export default function AnnualLeave() {
+  usePageMeta(
+    '特休天數計算',
+    '依勞基法第 38 條，從到職日與查詢日期推算目前法定特休天數與下一個年資門檻。',
+  )
+
   const [startDate, setStartDate] = useState('')
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')

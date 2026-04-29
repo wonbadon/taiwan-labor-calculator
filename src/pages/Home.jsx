@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import usePageMeta from '../hooks/usePageMeta'
 
 function IconBase({ children, className = 'h-5 w-5' }) {
   return (
@@ -114,7 +115,43 @@ const tools = [
   },
 ]
 
+const resources = [
+  {
+    to: '/guide',
+    eyebrow: '第一次使用',
+    title: '新手指南',
+    desc: '先分情境、再準備資料，讓第一次使用的人可以快速進入正確工具。',
+    points: ['先選工具', '整理輸入欄位', '知道哪些地方要人工覆核'],
+  },
+  {
+    to: '/scenarios',
+    eyebrow: '快速判斷',
+    title: '熱門情境比較',
+    desc: '把最容易混淆的加班、離職與假勤情境拆開比對，不用邊查邊猜。',
+    points: ['平日 vs 休息日', '國定假日 vs 例假日', '資遣 vs 自請離職'],
+  },
+  {
+    to: '/faq',
+    eyebrow: '集中解答',
+    title: '常見問題',
+    desc: '整理站內最常見的法條口徑、結果差異與輸入誤區。',
+    points: ['為什麼公司算的不一樣', '特休沒休完怎麼算', '平均工資怎麼看'],
+  },
+  {
+    to: '/about',
+    eyebrow: '站點說明',
+    title: '關於本站',
+    desc: '說清楚資料來源、更新邊界與免責定位，避免把試算站當成官方認定。',
+    points: ['資料來源範圍', '不涵蓋的複雜情況', '使用前後要注意什麼'],
+  },
+]
+
 export default function Home() {
+  usePageMeta(
+    '首頁與試算工具',
+    '台灣勞工權益計算器首頁，整理加班費、特休、資遣費、勞退與新手指南、常見問題、情境比較等入口。',
+  )
+
   return (
     <div className="home-directory-page">
       <div className="home-directory-wrap">
@@ -182,6 +219,37 @@ export default function Home() {
               </div>
             </Link>
           ))}
+        </section>
+
+        <section className="home-directory-section mt-16">
+          <div className="max-w-3xl">
+            <p className="home-directory-kicker">把工具站補成完整網站</p>
+            <h2 className="home-directory-section-title mt-3">如果你還不確定該先算什麼，先從這幾頁進來</h2>
+            <p className="home-directory-section-desc mt-4">
+              首頁不只放入口，也把新手導覽、情境拆解、常見問題與站點邊界整理好，讓你不用一進站就直接掉進法條細節。
+            </p>
+          </div>
+
+          <div className="home-directory-support-grid mt-8">
+            {resources.map(({ to, eyebrow, title, desc, points }) => (
+              <Link key={to} to={to} className="home-directory-support-card">
+                <p className="home-directory-support-eyebrow">{eyebrow}</p>
+                <h3 className="home-directory-support-title mt-3">{title}</h3>
+                <p className="home-directory-support-desc mt-4">{desc}</p>
+
+                <ul className="home-directory-support-list mt-5">
+                  {points.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+
+                <div className="home-directory-cta mt-7">
+                  查看內容
+                  <ArrowIcon />
+                </div>
+              </Link>
+            ))}
+          </div>
         </section>
       </div>
     </div>

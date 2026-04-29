@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import usePageMeta from '../hooks/usePageMeta'
 import { contentCatalog, featuredTools, secondaryTools } from '../data/toolCatalog'
@@ -86,7 +87,42 @@ const categorySummary = Object.entries(toolGroups).map(([category, tools]) => ({
   count: tools.length,
 }))
 
+function CategoryPillButton({ label, count, isActive, onClick }) {
+  return (
+    <button
+      type="button"
+      className={`home-tool-pill home-tool-pill-button${isActive ? ' home-tool-pill-active' : ''}`}
+      onClick={onClick}
+      aria-pressed={isActive}
+    >
+      {label}
+      <span className="home-tool-pill-count">{count}</span>
+    </button>
+  )
+}
+
 export default function Home() {
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const librarySectionRef = useRef(null)
+
+  const categoryFilters = [
+    { label: '全部工具', category: null, count: secondaryTools.length },
+    ...categorySummary.map(({ category, count }) => ({ label: category, category, count })),
+  ]
+
+  const visibleTools = selectedCategory ? toolGroups[selectedCategory] ?? [] : secondaryTools
+
+  const handleCategorySelect = (category, scrollToLibrary = false) => {
+    const nextCategory = selectedCategory === category ? null : category
+    setSelectedCategory(nextCategory)
+
+    if (scrollToLibrary) {
+      requestAnimationFrame(() => {
+        librarySectionRef.current?.scrollIntoView({ block: 'start' })
+      })
+    }
+  }
+
   usePageMeta(
     '首頁與試算工具',
     '台灣勞工權益計算器首頁，整理全部試算工具與新手導覽內容。',
@@ -167,11 +203,14 @@ export default function Home() {
               <p className="home-directory-kicker">工具分類</p>
               <p className="mt-3 text-sm leading-7 text-slate-500">每個工具維持單一主題，依分類直接找到需要的頁面即可。</p>
               <div className="home-tool-pill-wrap mt-4">
-                {categorySummary.map(({ category, count }) => (
-                  <span key={category} className="home-tool-pill">
-                    {category}
-                    <span className="home-tool-pill-count">{count}</span>
-                  </span>
+                {categoryFilters.map(({ label, category, count }) => (
+                  <CategoryPillButton
+                    key={category ?? 'all-tools-rail'}
+                    label={label}
+                    count={count}
+                    isActive={selectedCategory === category}
+                    onClick={() => handleCategorySelect(category, true)}
+                  />
                 ))}
               </div>
             </div>
@@ -229,7 +268,7 @@ export default function Home() {
           })}
         </section>
 
-        <section className="home-directory-section mt-14 sm:mt-16">
+        <section ref={librarySectionRef} className="home-directory-section mt-14 sm:mt-16">
           <div className="max-w-3xl">
             <p className="home-directory-kicker">完整工具庫</p>
             <h2 className="home-directory-section-title mt-3">其餘工具集中在同一區，直接選頁面進入</h2>
@@ -239,16 +278,23 @@ export default function Home() {
           </div>
 
           <div className="home-tool-pill-wrap mt-6 sm:mt-8">
-            {categorySummary.map(({ category, count }) => (
-              <span key={category} className="home-tool-pill">
-                {category}
-                <span className="home-tool-pill-count">{count}</span>
-              </span>
+            {categoryFilters.map(({ label, category, count }) => (
+              <CategoryPillButton
+                key={category ?? 'all-tools-library'}
+                label={label}
+                count={count}
+                isActive={selectedCategory === category}
+                onClick={() => handleCategorySelect(category)}
+              />
             ))}
           </div>
 
+          <p className="mt-4 text-sm leading-7 text-slate-500">
+            目前顯示：{selectedCategory ?? '全部工具'}，共 {visibleTools.length} 個工具。
+          </p>
+
           <div className="home-tool-library-grid mt-6 sm:mt-8">
-            {secondaryTools.map(({ to, title, desc, category, badge, law, inputs }) => (
+            {visibleTools.map(({ to, title, desc, category, badge, law, inputs }) => (
               <Link key={to} to={to} className="home-tool-library-card">
                 <div className="flex flex-wrap items-start gap-2">
                   <span className="home-directory-tag home-directory-tag-primary">{category}</span>

@@ -508,6 +508,29 @@
     @apply inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-semibold text-slate-700;
   }
 
+  .home-tool-pill-button {
+    @apply cursor-pointer transition duration-200;
+    appearance: none;
+  }
+
+  .home-tool-pill-button:hover {
+    @apply border-sky-200 bg-white text-sky-700;
+  }
+
+  .home-tool-pill-button:focus-visible {
+    outline: 3px solid rgba(59, 130, 246, 0.18);
+    outline-offset: 2px;
+  }
+
+  .home-tool-pill-active {
+    @apply border-sky-200 bg-sky-50 text-sky-700;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  }
+
+  .home-tool-pill-active .home-tool-pill-count {
+    @apply bg-white text-sky-700;
+  }
+
   .home-tool-pill-count {
     @apply inline-flex items-center justify-center rounded-full bg-white px-2 py-0.5 text-[11px] font-extrabold text-slate-500;
     min-width: 1.75rem;

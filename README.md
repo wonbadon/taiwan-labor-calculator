@@ -1,16 +1,41 @@
-# React + Vite
+# 台灣勞工權益計算器
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+這是一個以 React + Vite 製作的台灣勞工權益試算網站，包含：
 
-Currently, two official plugins are available:
+- 加班與假日出勤工資
+- 特休資格與法定天數
+- 資遣費新舊制拆算
+- 勞退提撥與累積試算
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 開發指令
 
-## React Compiler
+```bash
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 發佈到 GitHub Pages
 
-## Expanding the ESLint configuration
+這個專案已經設定好 GitHub Actions。
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 每次推送到 `master`，GitHub Pages workflow 會自動建置並部署網站。
+- React Router 已改成 `HashRouter`，適合 GitHub Pages 靜態部署。
+
+## 本機一鍵同步網站
+
+如果你在本機修改了內容，要同步到 GitHub 與網站，直接執行：
+
+```bash
+npm run sync:site -- "你的提交訊息"
+```
+
+這個指令會自動做 4 件事：
+
+1. 先跑 `npm run build`
+2. 把目前所有變更加入 git
+3. 建立 commit
+4. 推送到 GitHub
+
+推送完成後，GitHub Pages 會自動開始部署。
+
+如果你沒有輸入提交訊息，腳本會自動用目前時間建立一個預設訊息。

@@ -4,33 +4,53 @@ const tools = [
   {
     to: '/overtime',
     code: '01',
+    tag: '最常用',
+    tone: 'tool-card-overtime',
     law: '第24條 / 第39條',
     title: '加班與假日出勤工資',
     desc: '平日延長工時、休息日出勤、國定假日與休假日出勤，一次換成具體金額。',
+    audience: '今天正在對班表、出勤紀錄、薪資單，想知道公司至少該給多少。',
+    prepare: '計薪方式、時數、時薪或月薪換算基礎、假別。',
+    result: '應給金額、倍率口徑，以及最容易套錯法條的情境提醒。',
     note: '一般例假日原則不得要求出勤；天災事變停止假期情形，應另依第40條認定。',
   },
   {
     to: '/annual-leave',
     code: '02',
+    tag: '最容易算錯',
+    tone: 'tool-card-leave',
     law: '第38條',
     title: '特休資格與年資門檻',
     desc: '以滿整月年資計算，不會提前把未滿一個月的時間算進特休資格。',
+    audience: '你想先確認自己目前到底有沒有特休、差多久到下一個門檻。',
+    prepare: '到職日、查詢日期，以及公司採周年制或曆年制的基本認知。',
+    result: '法定天數、目前年資狀態、距離下一個門檻還差多久。',
     note: '周年制、曆年制折算與遞延規則，仍須以公司制度與勞雇約定為準。',
   },
   {
     to: '/severance',
     code: '03',
+    tag: '離職前必看',
+    tone: 'tool-card-severance',
     law: '第17條 / 勞退條例第12條',
     title: '資遣費新舊制拆算',
     desc: '同時處理 2005/7/1 前後的年資段，避免把舊制錯套成新制上限。',
+    audience: '你正在面對非自願離職、裁員、資遣通知，想先抓合理區間。',
+    prepare: '到職日、離職日、平均工資，以及 2005/7/1 前後的年資切點。',
+    result: '新舊制拆算結果、上限差異，以及接近邊界時需要人工覆核的提醒。',
     note: '本工具用年資小數比例試算，接近未滿 1 個月進位邊界時請人工覆核。',
   },
   {
     to: '/labor-pension',
     code: '04',
+    tag: '長期規劃',
+    tone: 'tool-card-pension',
     law: '勞工退休金條例',
     title: '勞退提撥與累積試算',
     desc: '把月提繳工資級距、雇主 6% 提撥與自願提撥，整理成長期累積結果。',
+    audience: '你想看現在的提撥級距、是否要自提，以及長期累積大概長什麼樣。',
+    prepare: '月提繳工資、自願提撥比例、年限，以及你接受的報酬率假設。',
+    result: '每月提撥金額、累積試算，以及假設報酬率下的長期差距。',
     note: '內建收益率與級距表是站內試算假設，並非個人帳戶實際結算。',
   },
 ]
@@ -125,21 +145,55 @@ export default function Home() {
       </section>
 
       <section id="tools" className="grid gap-4 md:grid-cols-2">
-        {tools.map(({ to, code, law, title, desc, note }) => (
-          <Link key={to} to={to} className="section-card group transition duration-200 hover:-translate-y-1">
-            <div className="flex items-start justify-between gap-4">
+        <div className="section-card md:col-span-2">
+          <p className="page-eyebrow">功能總覽</p>
+          <h2 className="mt-4 text-3xl font-extrabold text-white md:text-4xl">
+            不知道要按哪個功能，就先用情境選。
+          </h2>
+          <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300 md:text-base">
+            下面每一張卡都直接告訴你：這頁是算什麼、適合什麼情況、你要先準備哪些資料、算完會得到什麼。
+            你不用先理解全部法條，先對到你的問題就好。
+          </p>
+        </div>
+
+        {tools.map(({ to, code, tag, tone, law, title, desc, audience, prepare, result, note }) => (
+          <Link key={to} to={to} className={`tool-card group ${tone}`}>
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
               <div>
-                <p className="text-sm font-bold tracking-[0.2em] text-sky-300/80">{code}</p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="tool-code">{code}</span>
+                  <span className="tool-tag">{tag}</span>
+                  <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-slate-200">
+                    {law}
+                  </span>
+                </div>
                 <h2 className="mt-3 text-2xl font-extrabold text-white">{title}</h2>
+                <p className="mt-3 text-base font-semibold text-white/90">{desc}</p>
               </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-slate-300">
-                {law}
-              </span>
             </div>
-            <p className="mt-4 text-sm leading-7 text-slate-300">{desc}</p>
-            <p className="mt-4 border-t border-white/10 pt-4 text-xs leading-6 text-slate-400">{note}</p>
-            <div className="mt-5 text-sm font-semibold text-sky-300 transition group-hover:text-white">
-              進入試算頁
+
+            <div className="mt-5 grid gap-3 xl:grid-cols-3">
+              <div className="tool-panel">
+                <p className="tool-panel-label">適合這種狀況</p>
+                <p className="mt-2 text-sm leading-7 text-slate-100">{audience}</p>
+              </div>
+              <div className="tool-panel">
+                <p className="tool-panel-label">你要先準備</p>
+                <p className="mt-2 text-sm leading-7 text-slate-100">{prepare}</p>
+              </div>
+              <div className="tool-panel">
+                <p className="tool-panel-label">算完會看到</p>
+                <p className="mt-2 text-sm leading-7 text-slate-100">{result}</p>
+              </div>
+            </div>
+
+            <div className="mt-5 rounded-[20px] border border-white/10 bg-black/20 p-4">
+              <p className="tool-panel-label text-rose-200/85">這頁不幫你處理的部分</p>
+              <p className="mt-2 text-sm leading-7 text-slate-300">{note}</p>
+            </div>
+
+            <div className="mt-5 text-base font-extrabold text-white transition group-hover:translate-x-1">
+              直接進這頁開始試算
             </div>
           </Link>
         ))}

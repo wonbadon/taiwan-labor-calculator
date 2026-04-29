@@ -3,22 +3,59 @@ import { Link, useLocation } from 'react-router-dom'
 
 const navLinks = [
   { to: '/', label: '首頁' },
-  { to: '/overtime', label: '加班費' },
-  { to: '/annual-leave', label: '特休天數' },
-  { to: '/severance', label: '資遣費' },
-  { to: '/labor-pension', label: '勞退試算' },
+  { to: '/overtime', label: '算加班費' },
+  { to: '/annual-leave', label: '算特休天數' },
+  { to: '/severance', label: '算資遣費' },
+  { to: '/labor-pension', label: '算勞退' },
 ]
 
-const disclaimerPoints = [
-  '本站內容依公開法規、主管機關說明與站內試算假設整理，僅供你先判讀方向。',
-  '實際權益仍會受薪資結構、班表制度、周年制或曆年制、契約約定與個案事實影響。',
-  '遇到資遣、工時爭議、補償金或罰則問題，請再向勞工局、勞動部或專業律師確認。',
+const ownerName = 'wonbadon'
+
+const disclaimerSections = [
+  {
+    title: '法律定位',
+    tone: 'notice-card-warning',
+    items: [
+      '本站是公開法規資訊整理與前端試算工具，不是勞動部、勞工局或任何政府機關官方網站。',
+      '本站內容不構成法律意見、勞資爭議代理意見、會計意見或人資決策保證。',
+      '正式申訴、協商、離職簽署、調解或訴訟前，請再用原始資料與主管機關說明做人工覆核。',
+    ],
+  },
+  {
+    title: '輸入資料責任',
+    tone: 'notice-card-danger',
+    items: [
+      '你自行輸入的薪資、時數、到職日、離職日、假別、平均工資口徑與制度類型，如有錯誤、遺漏或分類錯誤，試算結果就會直接失真。',
+      '因輸入資料錯誤、理解法條錯誤、引用本站試算結果做內部核薪、協商、離職、申訴或其他決策而產生的損失，應由使用者自行判斷與承擔。',
+      '如果你的案件涉及獎金、津貼、輪班、變形工時、曆年制折算、非自願離職爭議或其他特殊事實，本工具不保證能完整覆蓋。',
+    ],
+  },
+  {
+    title: '資料與隱私邊界',
+    tone: 'notice-card-safe',
+    items: [
+      '本站目前沒有會員系統，也不是用來保存個人勞資爭議資料的服務平台。',
+      '你在頁面內輸入的數值，主要用於瀏覽器端即時計算；但你仍不應輸入不必要的身分證號、住址、完整薪資單影本等敏感資訊。',
+      '本站不提供個案存證、時效中斷、法律通知或官方認證功能。',
+    ],
+  },
+  {
+    title: '版權與站點資訊',
+    tone: 'notice-card-neutral',
+    items: [
+      `除另有註明外，本站介面設計、整理文案與站內原創內容之著作權屬 ${ownerName} 所有。`,
+      `© ${new Date().getFullYear()} ${ownerName}. All rights reserved.`,
+      '引用本站內容時，請自行判斷是否仍與最新法規、函釋與主管機關說明一致。',
+    ],
+  },
 ]
 
-const referencePoints = [
-  '加班與假日出勤：依勞基法第24條、第39條及主管機關公開說明整理。',
-  '特休天數：依在職年資門檻試算，未處理企業內部曆年制折算。',
-  '勞退試算：採站內級距表與固定年化報酬假設，不代表個人實際投資成果。',
+const siteLinks = [
+  '首頁：先用情境選你要處理的是加班、特休、資遣還是勞退。',
+  '算加班費：處理平日延長工時、休息日與國定假日 / 休假日出勤。',
+  '算特休天數：確認法定門檻、目前資格與下一個里程碑。',
+  '算資遣費：拆開新舊制年資，避免把兩套規則混在一起。',
+  '算勞退：看提撥級距、自提比例與長期累積差異。',
 ]
 
 export default function Layout({ children }) {
@@ -97,42 +134,65 @@ export default function Layout({ children }) {
       <footer className="relative mt-16 border-t border-white/10 bg-slate-950/70">
         <div className="mx-auto max-w-6xl space-y-6 px-4 py-10 sm:px-6">
           <div className="section-card">
-            <div className="grid gap-6 lg:grid-cols-[1.15fr,0.85fr]">
+            <div className="grid gap-6 xl:grid-cols-[1.05fr,0.95fr]">
               <div>
                 <p className="page-eyebrow">重要免責聲明</p>
                 <h2 className="mt-4 text-2xl font-extrabold text-white md:text-3xl">
-                  這是公開資訊整理與試算工具，不取代正式法律意見。
+                  這是公開資訊整理與試算工具，不是官方認定結果，也不替你承擔輸入錯誤風險。
                 </h2>
                 <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
-                  我把常見勞工權益場景拆成可快速計算的頁面，目的是幫你先確認方向、預估落點與整理提問重點。
-                  如果你的情況涉及非自願離職爭議、調職、獎金是否列入平均工資、工時制度特殊排班或公司自訂特休制度，請務必再做人工確認。
+                  我把常見勞工權益場景拆成可快速計算的頁面，目的是幫使用者先確認方向、預估落點與整理提問重點。
+                  但本站不能取代正式法規解釋、個案法律判斷、官方書面認定，也不保證所有公司制度與特殊排班都能被完整涵蓋。
                 </p>
+
+                <div className="mt-6 rounded-[22px] border border-amber-300/20 bg-amber-400/10 p-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-200/90">使用前先看</p>
+                  <p className="mt-3 text-sm leading-7 text-slate-100">
+                    如果你把薪資、工時、假別、年資、平均工資口徑或制度類型輸錯，本站算出來的數字就不應被當成你可以直接主張的最終權利。
+                    本站的角色是幫你縮小問題範圍，不是代替你完成正式法律判斷。
+                  </p>
+                </div>
               </div>
 
-              <div className="space-y-3">
-                <div className="metric-tile">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300/75">使用邊界</p>
-                  <ul className="site-list mt-3 space-y-2 text-sm leading-7 text-slate-300">
-                    {disclaimerPoints.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="metric-tile">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300/80">站內試算基準</p>
-                  <ul className="site-list mt-3 space-y-2 text-sm leading-7 text-slate-300">
-                    {referencePoints.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-1">
+                {disclaimerSections.map(({ title, tone, items }) => (
+                  <div key={title} className={`notice-card ${tone}`}>
+                    <p className="text-sm font-extrabold text-white">{title}</p>
+                    <ul className="site-list mt-3 space-y-2 text-sm leading-7 text-slate-100">
+                      {items.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-6 grid gap-4 xl:grid-cols-[0.95fr,1.05fr]">
+              <div className="metric-tile">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300/80">網站功能導覽</p>
+                <ul className="site-list mt-3 space-y-2 text-sm leading-7 text-slate-300">
+                  {siteLinks.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="metric-tile">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300/80">站點基本資訊</p>
+                <ul className="site-list mt-3 space-y-2 text-sm leading-7 text-slate-300">
+                  <li>網站名稱：台灣勞工權益計算器</li>
+                  <li>網站性質：前端試算工具與公開資訊整理站，不是官方服務窗口。</li>
+                  <li>網站維護者：{ownerName}</li>
+                  <li>版權標示：© {new Date().getFullYear()} {ownerName}. All rights reserved.</li>
+                </ul>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col gap-2 border-t border-white/10 pt-4 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
-            <p>© {new Date().getFullYear()} 台灣勞工權益計算器</p>
-            <p>建議在正式申訴、協商或簽署文件前，再向主管機關或專業人士覆核。</p>
+            <p>© {new Date().getFullYear()} 台灣勞工權益計算器 / {ownerName}</p>
+            <p>正式申訴、協商、簽約或提告前，請以原始資料、公司制度與主管機關說明再次覆核。</p>
           </div>
         </div>
       </footer>

@@ -175,6 +175,100 @@
     @apply rounded-[22px] border border-white/10 bg-white/5 p-4;
   }
 
+  .tool-card {
+    @apply relative overflow-hidden rounded-[28px] border p-6 transition duration-200 hover:-translate-y-1 md:p-7;
+    box-shadow: 0 24px 70px rgba(2, 6, 23, 0.42);
+  }
+
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .tool-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .tool-card-overtime {
+    @apply border-sky-300/25 bg-slate-950/85;
+  }
+
+  .tool-card-overtime::before {
+    background:
+      linear-gradient(135deg, rgba(56, 189, 248, 0.16) 0%, transparent 42%),
+      linear-gradient(180deg, rgba(14, 165, 233, 0.1) 0%, rgba(2, 6, 23, 0) 100%);
+  }
+
+  .tool-card-leave {
+    @apply border-emerald-300/25 bg-slate-950/85;
+  }
+
+  .tool-card-leave::before {
+    background:
+      linear-gradient(135deg, rgba(52, 211, 153, 0.16) 0%, transparent 42%),
+      linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(2, 6, 23, 0) 100%);
+  }
+
+  .tool-card-severance {
+    @apply border-amber-300/25 bg-slate-950/85;
+  }
+
+  .tool-card-severance::before {
+    background:
+      linear-gradient(135deg, rgba(251, 191, 36, 0.16) 0%, transparent 42%),
+      linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(2, 6, 23, 0) 100%);
+  }
+
+  .tool-card-pension {
+    @apply border-cyan-300/25 bg-slate-950/85;
+  }
+
+  .tool-card-pension::before {
+    background:
+      linear-gradient(135deg, rgba(34, 211, 238, 0.16) 0%, transparent 42%),
+      linear-gradient(180deg, rgba(6, 182, 212, 0.08) 0%, rgba(2, 6, 23, 0) 100%);
+  }
+
+  .tool-code {
+    @apply inline-flex items-center justify-center rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-extrabold tracking-[0.2em] text-white;
+  }
+
+  .tool-tag {
+    @apply inline-flex items-center justify-center rounded-full px-3 py-1 text-xs font-bold text-slate-950;
+    background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+  }
+
+  .tool-panel {
+    @apply rounded-[20px] border border-white/10 bg-black/20 p-4;
+  }
+
+  .tool-panel-label {
+    @apply text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400;
+  }
+
+  .notice-card {
+    @apply rounded-[22px] border p-4;
+  }
+
+  .notice-card-warning {
+    @apply border-amber-300/20 bg-amber-400/10;
+  }
+
+  .notice-card-danger {
+    @apply border-rose-300/20 bg-rose-400/10;
+  }
+
+  .notice-card-safe {
+    @apply border-emerald-300/20 bg-emerald-400/10;
+  }
+
+  .notice-card-neutral {
+    @apply border-sky-300/20 bg-sky-400/10;
+  }
+
   .table-shell {
     @apply overflow-hidden rounded-[22px] border border-white/10 bg-black/10;
   }

@@ -7,13 +7,23 @@ const LEAVE_SCHEDULE = [
   { minMonths: 60, maxMonths: 120, days: 15 },
 ]
 
+function getCompletedMonths(startDate, endDate) {
+  let months =
+    (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+    (endDate.getMonth() - startDate.getMonth())
+
+  if (endDate.getDate() < startDate.getDate()) {
+    months -= 1
+  }
+
+  return Math.max(months, 0)
+}
+
 export function calcAnnualLeave(startDate) {
   const start = new Date(startDate)
   const today = new Date()
 
-  const totalMonths =
-    (today.getFullYear() - start.getFullYear()) * 12 +
-    (today.getMonth() - start.getMonth())
+  const totalMonths = getCompletedMonths(start, today)
 
   if (totalMonths < 6) {
     return { days: 0, nextDays: 3, monthsToNext: 6 - totalMonths, yearsWorked: totalMonths / 12 }

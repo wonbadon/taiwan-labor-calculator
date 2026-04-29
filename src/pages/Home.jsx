@@ -3,129 +3,182 @@ import { Link } from 'react-router-dom'
 const tools = [
   {
     to: '/overtime',
-    icon: '⏰',
-    title: '加班費計算器',
-    desc: '依勞基法第24條，計算平日、休息日、例假日的加班費',
-    color: 'from-blue-500 to-blue-600',
-    bg: 'bg-blue-50',
-    border: 'border-blue-100',
+    code: '01',
+    law: '第24條 / 第39條',
+    title: '加班與假日出勤工資',
+    desc: '平日延長工時、休息日出勤、國定假日與休假日出勤，一次換成具體金額。',
+    note: '一般例假日原則不得要求出勤；天災事變停止假期情形，應另依第40條認定。',
   },
   {
     to: '/annual-leave',
-    icon: '🌴',
-    title: '特休天數計算器',
-    desc: '輸入到職日，立即顯示本年度特休天數與下次升級時間',
-    color: 'from-green-500 to-green-600',
-    bg: 'bg-green-50',
-    border: 'border-green-100',
+    code: '02',
+    law: '第38條',
+    title: '特休資格與年資門檻',
+    desc: '以滿整月年資計算，不會提前把未滿一個月的時間算進特休資格。',
+    note: '周年制、曆年制折算與遞延規則，仍須以公司制度與勞雇約定為準。',
   },
   {
     to: '/severance',
-    icon: '💼',
-    title: '資遣費計算器',
-    desc: '依勞退新制、舊制計算資遣費，含年資比例拆算',
-    color: 'from-amber-500 to-amber-600',
-    bg: 'bg-amber-50',
-    border: 'border-amber-100',
+    code: '03',
+    law: '第17條 / 勞退條例第12條',
+    title: '資遣費新舊制拆算',
+    desc: '同時處理 2005/7/1 前後的年資段，避免把舊制錯套成新制上限。',
+    note: '本工具用年資小數比例試算，接近未滿 1 個月進位邊界時請人工覆核。',
   },
   {
     to: '/labor-pension',
-    icon: '🏦',
-    title: '勞退金試算',
-    desc: '試算雇主6%提撥加上自願提撥的退休金累積總額',
-    color: 'from-purple-500 to-purple-600',
-    bg: 'bg-purple-50',
-    border: 'border-purple-100',
+    code: '04',
+    law: '勞工退休金條例',
+    title: '勞退提撥與累積試算',
+    desc: '把月提繳工資級距、雇主 6% 提撥與自願提撥，整理成長期累積結果。',
+    note: '內建收益率與級距表是站內試算假設，並非個人帳戶實際結算。',
+  },
+]
+
+const workflow = [
+  {
+    title: '先確認情境',
+    desc: '你是要查加班、特休、非自願離職，還是長期退休累積。',
+  },
+  {
+    title: '再確認計薪口徑',
+    desc: '月薪制與時薪制、平均工資、年資跨新舊制，會直接改變結果。',
+  },
+  {
+    title: '最後看免責聲明',
+    desc: '遇到制度折算、獎金、津貼或特殊排班，請再做人工作業確認。',
   },
 ]
 
 const faqs = [
   {
     q: '加班費怎麼算？',
-    a: '依勞基法第24條：月薪÷30÷8得出時薪。平日前2小時加班費為時薪×4/3，第3小時起為時薪×5/3。',
+    a: '平日與休息日加班的倍率不同，國定假日 / 休假日也不能直接套同一條。站內已把這三種場景拆開，避免用錯法條。',
   },
   {
     q: '特休有幾天？',
-    a: '依勞基法第38條：到職滿6個月3天、1年7天、2年10天、3年14天、5年15天，滿10年後每年加1天（上限30天）。',
+    a: '法定門檻是到職滿 6 個月 3 天、1 年 7 天、2 年 10 天、3 年 14 天、5 年 15 天，滿 10 年後每年再加 1 天，最高 30 天。',
   },
   {
     q: '資遣費怎麼計算？',
-    a: '勞退新制：每滿1年給1/2個月平均工資，上限6個月。舊制：每滿1年給1個月，上限6個月。',
+    a: '新制年資每滿 1 年給 1/2 個月平均工資，最高 6 個月；舊制年資則是每滿 1 年給 1 個月平均工資，需依實際年資計算。',
   },
 ]
 
 export default function Home() {
   return (
-    <div>
-      {/* Hero */}
-      <section className="text-center py-10 md:py-14">
-        <div className="inline-flex items-center gap-2 bg-brand-50 text-brand-700 text-sm font-medium px-4 py-1.5 rounded-full mb-4 border border-brand-100">
-          <span>✅</span> 依據最新勞基法計算
+    <div className="space-y-8 md:space-y-10">
+      <section className="grid gap-6 lg:grid-cols-[1.15fr,0.85fr]">
+        <div className="section-card">
+          <p className="page-eyebrow">台灣勞工權益快速試算</p>
+          <h1 className="page-title mt-4">
+            把勞工權益，換成能立即判讀的數字。
+          </h1>
+          <p className="page-subtitle mt-4 max-w-2xl">
+            這不是花俏的展示頁，而是一個把加班費、特休、資遣費與勞退拆成四個核心試算器的實用工具。
+            你可以先在這裡抓到方向，再決定下一步要不要補資料、找主管機關或進一步法律諮詢。
+          </p>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link to="/overtime" className="btn-primary sm:w-auto">先算加班與出勤工資</Link>
+            <Link to="/severance" className="btn-secondary">查看資遣費拆算</Link>
+          </div>
+
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            {[
+              { value: '4', label: '核心試算頁' },
+              { value: '法規', label: '依條文與主管機關說明整理' },
+              { value: '深色', label: '高對比、手機桌機皆可用' },
+            ].map(({ value, label }) => (
+              <div key={label} className="metric-tile">
+                <p className="text-2xl font-extrabold text-white">{value}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-300">{label}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-          台灣勞工權益計算器
-        </h1>
-        <p className="text-lg md:text-xl text-gray-500 max-w-xl mx-auto mb-8">
-          加班費、特休天數、資遣費、勞退金 — 30 秒算清楚你的勞工權益
-        </p>
-        <Link to="/overtime" className="inline-block bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-3.5 rounded-xl transition-colors text-base">
-          立即試算加班費 →
-        </Link>
+
+        <aside className="section-card">
+          <p className="page-eyebrow">使用前先知道</p>
+          <div className="mt-4 space-y-4">
+            {[
+              {
+                title: '先確認你的計薪制',
+                desc: '月薪制與時薪制在國定假日 / 休假日的顯示口徑不同，不能直接套同一個倍率。',
+              },
+              {
+                title: '先分清法條情境',
+                desc: '休息日、國定假日、一般例假日不是同一件事。把假別分對，才會有對的數字。',
+              },
+              {
+                title: '最後一定看免責聲明',
+                desc: '像是曆年制特休、獎金是否列入平均工資、特殊排班等，仍需要人工確認。',
+              },
+            ].map(({ title, desc }) => (
+              <div key={title} className="metric-tile">
+                <p className="text-sm font-semibold text-white">{title}</p>
+                <p className="mt-2 text-sm leading-7 text-slate-300">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </aside>
       </section>
 
-      {/* Tools grid */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
-        {tools.map(({ to, icon, title, desc, bg, border }) => (
-          <Link
-            key={to}
-            to={to}
-            className={`${bg} ${border} border rounded-2xl p-6 hover:shadow-md transition-shadow group`}
-          >
-            <div className="text-3xl mb-3">{icon}</div>
-            <h2 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-brand-700 transition-colors">
-              {title}
-            </h2>
-            <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
-            <div className="mt-4 text-sm font-medium text-brand-600 flex items-center gap-1">
-              立即試算 <span>→</span>
+      <section id="tools" className="grid gap-4 md:grid-cols-2">
+        {tools.map(({ to, code, law, title, desc, note }) => (
+          <Link key={to} to={to} className="section-card group transition duration-200 hover:-translate-y-1">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-bold tracking-[0.2em] text-sky-300/80">{code}</p>
+                <h2 className="mt-3 text-2xl font-extrabold text-white">{title}</h2>
+              </div>
+              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-slate-300">
+                {law}
+              </span>
+            </div>
+            <p className="mt-4 text-sm leading-7 text-slate-300">{desc}</p>
+            <p className="mt-4 border-t border-white/10 pt-4 text-xs leading-6 text-slate-400">{note}</p>
+            <div className="mt-5 text-sm font-semibold text-sky-300 transition group-hover:text-white">
+              進入試算頁
             </div>
           </Link>
         ))}
       </section>
 
-      {/* Stats banner */}
-      <section className="section-card mb-12 bg-gradient-to-r from-brand-600 to-brand-800 text-white border-0">
-        <div className="grid grid-cols-3 gap-4 text-center">
-          {[
-            { num: '1,100萬+', label: '台灣受僱勞工' },
-            { num: '100%', label: '依勞基法計算' },
-            { num: '免費', label: '永久免費使用' },
-          ].map(({ num, label }) => (
-            <div key={label}>
-              <div className="text-2xl md:text-3xl font-bold">{num}</div>
-              <div className="text-sm text-blue-100 mt-1">{label}</div>
-            </div>
-          ))}
+      <section className="grid gap-4 lg:grid-cols-[0.95fr,1.05fr]">
+        <div className="section-card">
+          <p className="page-eyebrow">快速判讀流程</p>
+          <div className="mt-5 space-y-4">
+            {workflow.map(({ title, desc }, index) => (
+              <div key={title} className="metric-tile">
+                <div className="flex items-start gap-4">
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-sky-300/20 bg-sky-400/10 text-sm font-bold text-sky-200">
+                    0{index + 1}
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-white">{title}</p>
+                    <p className="mt-2 text-sm leading-7 text-slate-300">{desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="section-card">
+          <p className="page-eyebrow">常見問題</p>
+          <div className="mt-5 space-y-3">
+            {faqs.map(({ q, a }) => (
+              <details key={q} className="rounded-[22px] border border-white/10 bg-white/5 p-4 transition open:bg-white/10">
+                <summary className="cursor-pointer pr-8 text-sm font-semibold text-white">
+                  {q}
+                </summary>
+                <p className="mt-3 text-sm leading-7 text-slate-300">{a}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
-
-      {/* FAQ */}
-      <section className="section-card mb-12">
-        <h2 className="text-xl font-bold text-gray-900 mb-6">常見問題</h2>
-        <div className="space-y-4">
-          {faqs.map(({ q, a }) => (
-            <div key={q} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
-              <h3 className="font-semibold text-gray-900 mb-1">{q}</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">{a}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Disclaimer */}
-      <p className="text-xs text-gray-400 text-center pb-4">
-        本工具計算結果僅供參考，實際權益認定請洽勞動部或專業勞資顧問。
-      </p>
     </div>
   )
 }

@@ -14,9 +14,9 @@ export function calcSeverance({ avgSalary, yearsNew, yearsOld }) {
   const newSystemRaw = yN * 0.5 * salary
   const newSystemPay = Math.min(newSystemRaw, salary * 6)
 
-  // 舊制：年資 × 1 個月，上限 6 個月
+  // 舊制：年資 × 1 個月，以實際年資比例計算
   const oldSystemRaw = yO * salary
-  const oldSystemPay = Math.min(oldSystemRaw, salary * 6)
+  const oldSystemPay = oldSystemRaw
 
   const total = newSystemPay + oldSystemPay
 
@@ -25,6 +25,6 @@ export function calcSeverance({ avgSalary, yearsNew, yearsOld }) {
     oldSystemPay,
     total,
     newMonths: Math.min(yN * 0.5, 6),
-    oldMonths: Math.min(yO, 6),
+    oldMonths: yO,
   }
 }

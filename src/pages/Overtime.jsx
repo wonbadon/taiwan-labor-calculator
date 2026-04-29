@@ -17,6 +17,10 @@ export default function Overtime() {
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
 
+  const payNote = form.salaryType === 'monthly'
+    ? '月薪制結果顯示本次應另補發的金額；既有月薪本身不重複列入。'
+    : '時薪制結果顯示本次出勤依法應給金額；國定假日 / 休假日 8 小時內按出勤時數加倍計算。'
+
   function set(k, v) {
     setForm(f => ({ ...f, [k]: v }))
     setResult(null)
@@ -39,26 +43,34 @@ export default function Overtime() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="mb-6">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">加班費計算器</h1>
-        <p className="text-gray-500 text-sm">依《勞動基準法》第24條、第39條、第40條計算</p>
-      </div>
+    <div className="mx-auto max-w-3xl space-y-6">
+      <section className="space-y-3">
+        <p className="page-eyebrow">工資與工時</p>
+        <h1 className="page-title">加班與假日出勤試算</h1>
+        <p className="page-subtitle">
+          依《勞動基準法》第24條、第39條與主管機關公開說明整理。
+          一般例假日原則不得要求出勤；若屬天災、事變或突發事件停止假期，應另依第40條補假與通報規定處理。
+        </p>
+      </section>
 
-      <div className="section-card mb-6">
-        {/* Salary type toggle */}
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">薪資類型</label>
+      <div className="section-card space-y-6">
+        <div className="rounded-[22px] border border-amber-300/20 bg-amber-400/10 p-4">
+          <p className="text-sm font-semibold text-amber-100">先分清楚假別，才會有正確金額</p>
+          <p className="mt-2 text-sm leading-7 text-amber-50/90">
+            這頁提供平日延長工時、休息日出勤，以及國定假日 / 休假日出勤試算。
+            一般例假日不是常態加班場景，因此沒有與國定假日混在一起計算。
+          </p>
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-semibold text-slate-200">薪資類型</label>
           <div className="flex gap-2">
             {[{ v: 'monthly', label: '月薪制' }, { v: 'hourly', label: '時薪制' }].map(({ v, label }) => (
               <button
+                type="button"
                 key={v}
                 onClick={() => set('salaryType', v)}
-                className={`flex-1 py-2.5 rounded-lg text-sm font-medium border transition-colors ${
-                  form.salaryType === v
-                    ? 'bg-brand-600 text-white border-brand-600'
-                    : 'bg-white text-gray-600 border-gray-300 hover:border-brand-400'
-                }`}
+                className={form.salaryType === v ? 'segmented-button segmented-button-active' : 'segmented-button'}
               >
                 {label}
               </button>
@@ -66,10 +78,9 @@ export default function Overtime() {
           </div>
         </div>
 
-        {/* Salary input */}
         {form.salaryType === 'monthly' ? (
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">月薪（元）</label>
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-200">月薪（元）</label>
             <input
               type="number"
               className="input-field"
@@ -77,11 +88,11 @@ export default function Overtime() {
               value={form.monthlySalary}
               onChange={e => set('monthlySalary', e.target.value)}
             />
-            <p className="text-xs text-gray-400 mt-1">時薪將自動換算：月薪 ÷ 30 ÷ 8</p>
+            <p className="fine-print mt-2">時薪換算公式：月薪 ÷ 30 ÷ 8。</p>
           </div>
         ) : (
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">時薪（元）</label>
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-200">時薪（元）</label>
             <input
               type="number"
               className="input-field"
@@ -92,12 +103,11 @@ export default function Overtime() {
           </div>
         )}
 
-        {/* Hours inputs */}
-        <div className="space-y-4 mb-6">
+        <div className="grid gap-4 md:grid-cols-3">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-semibold text-slate-200">
               平日延長工時（小時）
-              <span className="ml-2 text-xs font-normal text-gray-400">前2h×1.33 / 第3h起×1.67</span>
+              <span className="mt-1 block text-xs font-normal text-slate-400">前 2h × 1.33 / 第 3h 起 × 1.67</span>
             </label>
             <input
               type="number"
@@ -109,10 +119,11 @@ export default function Overtime() {
               onChange={e => set('weekdayHours', e.target.value)}
             />
           </div>
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-semibold text-slate-200">
               休息日出勤（小時）
-              <span className="ml-2 text-xs font-normal text-gray-400">前2h×1.33 / 第3h起×1.67</span>
+              <span className="mt-1 block text-xs font-normal text-slate-400">前 2h × 1.33 / 3-8h × 1.67 / 第 9h 起 × 2.67</span>
             </label>
             <input
               type="number"
@@ -124,10 +135,11 @@ export default function Overtime() {
               onChange={e => set('restDayHours', e.target.value)}
             />
           </div>
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              例假日 / 國定假日出勤（小時）
-              <span className="ml-2 text-xs font-normal text-gray-400">×2.0</span>
+            <label className="mb-2 block text-sm font-semibold text-slate-200">
+              國定假日 / 休假日出勤（小時）
+              <span className="mt-1 block text-xs font-normal text-slate-400">月薪制 8h 內加發 1 日工資；超過 8h 再依第24條加成</span>
             </label>
             <input
               type="number"
@@ -141,73 +153,86 @@ export default function Overtime() {
           </div>
         </div>
 
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+        {error && <p className="text-sm text-rose-300">{error}</p>}
 
-        <button onClick={calculate} className="btn-primary">計算加班費</button>
+        <button onClick={calculate} className="btn-primary">計算應給金額</button>
       </div>
 
-      {/* Results */}
       {result && (
         <div className="section-card">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">計算結果</h2>
-
-          <div className="mb-4 p-3 bg-gray-50 rounded-lg text-sm text-gray-600">
-            適用時薪：<span className="font-semibold text-gray-900">{fmt(result.hourlyRate)} 元</span>
+          <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="page-eyebrow">試算結果</p>
+              <h2 className="mt-2 text-2xl font-extrabold text-white">本次依法應給金額</h2>
+            </div>
+            <p className="max-w-md text-sm leading-7 text-slate-300">{payNote}</p>
           </div>
 
-          <div className="space-y-3 mb-5">
+          <div className="metric-tile mb-4 text-sm text-slate-300">
+            適用時薪：<span className="font-semibold text-white">{fmt(result.hourlyRate)} 元</span>
+          </div>
+
+          <div className="mb-5 space-y-3">
             {result.weekdayPay > 0 && (
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-sm text-gray-600">平日加班費（{form.weekdayHours} 小時）</span>
-                <span className="font-semibold text-gray-900">+ {fmt(result.weekdayPay)} 元</span>
+              <div className="flex items-center justify-between border-b border-white/10 py-3">
+                <span className="text-sm text-slate-300">平日延長工時（{form.weekdayHours} 小時）</span>
+                <span className="font-semibold text-white">{fmt(result.weekdayPay)} 元</span>
               </div>
             )}
             {result.restDayPay > 0 && (
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-sm text-gray-600">休息日加班費（{form.restDayHours} 小時）</span>
-                <span className="font-semibold text-gray-900">+ {fmt(result.restDayPay)} 元</span>
+              <div className="flex items-center justify-between border-b border-white/10 py-3">
+                <span className="text-sm text-slate-300">休息日出勤（{form.restDayHours} 小時）</span>
+                <span className="font-semibold text-white">{fmt(result.restDayPay)} 元</span>
               </div>
             )}
             {result.holidayPay > 0 && (
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-sm text-gray-600">例假日加班費（{form.holidayHours} 小時）</span>
-                <span className="font-semibold text-gray-900">+ {fmt(result.holidayPay)} 元</span>
+              <div className="flex items-center justify-between border-b border-white/10 py-3">
+                <span className="text-sm text-slate-300">國定假日 / 休假日出勤（{form.holidayHours} 小時）</span>
+                <span className="font-semibold text-white">{fmt(result.holidayPay)} 元</span>
               </div>
             )}
           </div>
 
           <div className="result-card flex justify-between items-center">
-            <span className="font-bold text-gray-800">本次加班費合計</span>
-            <span className="text-2xl font-bold text-brand-700">{fmt(result.total)} 元</span>
+            <span className="font-bold text-white">本次應給合計</span>
+            <span className="text-2xl font-bold text-sky-100">{fmt(result.total)} 元</span>
           </div>
 
-          <p className="text-xs text-gray-400 mt-4">
-            * 加班費為雇主應「額外」給付的金額，不含原本工資。例假日出勤尚須取得勞工同意，雇主不得強制要求。
+          <p className="fine-print mt-4">
+            * 一般例假日原則不得要求出勤；若屬天災、事變或突發事件停止假期，仍須補假並依法通報。
           </p>
         </div>
       )}
 
-      {/* Explanation */}
       <div className="section-card mt-6">
-        <h2 className="text-lg font-bold text-gray-900 mb-4">加班費計算原理</h2>
-        <div className="space-y-3 text-sm text-gray-600">
-          <div className="p-3 bg-blue-50 rounded-lg">
-            <p className="font-medium text-blue-900 mb-1">月薪換算時薪</p>
+        <p className="page-eyebrow">計算原理</p>
+        <h2 className="mt-3 text-2xl font-extrabold text-white">三種出勤情境，三種不同口徑</h2>
+        <div className="mt-5 space-y-3 text-sm leading-7 text-slate-300">
+          <div className="metric-tile">
+            <p className="mb-1 font-medium text-white">月薪換算時薪</p>
             <p>時薪 = 月薪 ÷ 30（天）÷ 8（小時）</p>
           </div>
-          <div className="p-3 bg-green-50 rounded-lg">
-            <p className="font-medium text-green-900 mb-1">平日加班（勞基法第24條第1項）</p>
-            <p>前 2 小時：時薪 × 4/3（即加發 1/3）</p>
-            <p>第 3 小時起：時薪 × 5/3（即加發 2/3）</p>
-          </div>
-          <div className="p-3 bg-amber-50 rounded-lg">
-            <p className="font-medium text-amber-900 mb-1">休息日加班（勞基法第24條第2項）</p>
+          <div className="metric-tile">
+            <p className="mb-1 font-medium text-white">平日延長工時（勞基法第24條）</p>
             <p>前 2 小時：時薪 × 4/3</p>
             <p>第 3 小時起：時薪 × 5/3</p>
           </div>
-          <div className="p-3 bg-red-50 rounded-lg">
-            <p className="font-medium text-red-900 mb-1">例假日 / 國定假日（勞基法第40條）</p>
-            <p>每小時：時薪 × 2（雙倍給付）</p>
+          <div className="metric-tile">
+            <p className="mb-1 font-medium text-white">休息日出勤（勞基法第24條第2項）</p>
+            <p>前 2 小時：時薪 × 4/3</p>
+            <p>第 3 至 8 小時：時薪 × 5/3</p>
+            <p>第 9 小時起：時薪 × 8/3</p>
+          </div>
+          <div className="metric-tile">
+            <p className="mb-1 font-medium text-white">國定假日 / 休假日（勞基法第39條）</p>
+            <p>月薪制：8 小時內另加發 1 日工資；超過 8 小時再依第24條加成。</p>
+            <p>時薪制：8 小時內按出勤時數加倍給付；超過 8 小時再依第24條加成。</p>
+          </div>
+          <div className="rounded-[22px] border border-rose-300/20 bg-rose-400/10 p-4">
+            <p className="mb-1 font-medium text-rose-100">一般例假日不是常態加班欄位</p>
+            <p className="text-rose-50/90">
+              一般例假日原則不得要求出勤。若是天災、事變或突發事件停止假期，才會進入第40條的加倍發給與補假規則。
+            </p>
           </div>
         </div>
       </div>

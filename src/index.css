@@ -1,27 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: dark;
+}
+
 @layer base {
   html {
-    font-family: system-ui, 'Segoe UI', -apple-system, sans-serif;
+    font-family: 'Manrope', 'Noto Sans TC', sans-serif;
+    background-color: #030712;
+    scroll-behavior: smooth;
   }
+
   body {
-    @apply bg-gray-50 text-gray-800;
+    @apply min-h-screen antialiased;
+    background:
+      radial-gradient(circle at top, rgba(56, 189, 248, 0.18), transparent 28%),
+      radial-gradient(circle at 15% 30%, rgba(52, 211, 153, 0.1), transparent 26%),
+      radial-gradient(circle at 82% 14%, rgba(14, 165, 233, 0.12), transparent 22%),
+      linear-gradient(180deg, #020712 0%, #08111f 48%, #07101c 100%);
+    color: #f8fafc;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 75%);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.03em;
+  }
+
+  ::selection {
+    background: rgba(56, 189, 248, 0.3);
+    color: #f8fafc;
+  }
+
+  details summary {
+    list-style: none;
+  }
+
+  details summary::-webkit-details-marker {
+    display: none;
   }
 }
 
 @layer components {
+  .brand-mark {
+    @apply relative inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-sky-300/20 bg-sky-400/10;
+    box-shadow: 0 18px 40px rgba(14, 165, 233, 0.18);
+  }
+
+  .brand-mark::before {
+    content: '';
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0.4rem;
+    background: linear-gradient(135deg, #e0f2fe 0%, #7dd3fc 38%, #0ea5e9 100%);
+    transform: rotate(12deg);
+  }
+
+  .nav-link {
+    @apply rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition;
+  }
+
+  .nav-link:hover {
+    @apply bg-white/5 text-white;
+  }
+
+  .nav-link-active {
+    @apply border border-sky-300/20 bg-sky-400/10 text-white;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .page-eyebrow {
+    @apply text-[11px] font-bold uppercase tracking-[0.28em] text-sky-300/80;
+  }
+
+  .page-title {
+    @apply text-3xl font-extrabold leading-tight text-white md:text-5xl;
+  }
+
+  .page-subtitle {
+    @apply text-sm leading-7 text-slate-300 md:text-base;
+  }
+
   .input-field {
-    @apply w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition bg-white;
+    @apply w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3.5 text-sm text-white transition;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
+
+  .input-field::placeholder {
+    color: #64748b;
+  }
+
+  .input-field:focus {
+    @apply border-sky-300/40 outline-none;
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.16);
+  }
+
+  .input-field option {
+    color: #0f172a;
+  }
+
   .result-card {
-    @apply bg-brand-50 border border-brand-200 rounded-xl p-5;
+    @apply rounded-[24px] border border-sky-300/20 bg-sky-400/10 p-5;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
+
   .btn-primary {
-    @apply w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200;
+    @apply inline-flex w-full items-center justify-center rounded-full px-6 py-3.5 text-sm font-extrabold text-slate-950 transition duration-200;
+    background: linear-gradient(135deg, #e0f2fe 0%, #7dd3fc 42%, #22d3ee 100%);
+    box-shadow: 0 16px 36px rgba(34, 211, 238, 0.18);
   }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 20px 40px rgba(34, 211, 238, 0.24);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition duration-200;
+  }
+
+  .btn-secondary:hover {
+    @apply border-white/20 bg-white/10;
+  }
+
+  .segmented-button {
+    @apply flex-1 rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-300 transition;
+  }
+
+  .segmented-button:hover {
+    @apply border-white/20 bg-white/10 text-white;
+  }
+
+  .segmented-button-active {
+    @apply border-sky-300/30 bg-sky-400/15 text-white;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
   .section-card {
-    @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8;
+    @apply relative overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/75 p-6 backdrop-blur-xl md:p-8;
+    box-shadow: 0 30px 80px rgba(2, 6, 23, 0.46);
+  }
+
+  .section-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(125, 211, 252, 0.08) 0%, rgba(14, 165, 233, 0) 35%, rgba(52, 211, 153, 0.06) 100%);
+    pointer-events: none;
+  }
+
+  .section-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .metric-tile {
+    @apply rounded-[22px] border border-white/10 bg-white/5 p-4;
+  }
+
+  .table-shell {
+    @apply overflow-hidden rounded-[22px] border border-white/10 bg-black/10;
+  }
+
+  .fine-print {
+    @apply text-xs leading-6 text-slate-400;
+  }
+
+  .site-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .site-list li {
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .site-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 999px;
+    background: #38bdf8;
   }
 }

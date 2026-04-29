@@ -9,6 +9,7 @@ export const adsConfig = {
   slots: {
     home: import.meta.env.VITE_ADSENSE_HOME_SLOT || '',
     page: import.meta.env.VITE_ADSENSE_PAGE_SLOT || '',
+    content: import.meta.env.VITE_ADSENSE_CONTENT_SLOT || '',
   },
 }
 

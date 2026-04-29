@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import AdSlot from './AdSlot'
+import SupportCta from './SupportCta'
 import { adsConfig } from '../config/ads'
 import { contentCatalog, featuredTools, toolCatalog } from '../data/toolCatalog'
 
@@ -17,6 +18,9 @@ const navLinks = [
   { to: '/guide', label: '新手指南' },
   ...featuredTools.map(({ to, shortLabel }) => ({ to, label: shortLabel })),
 ]
+
+const toolRouteSet = new Set(toolCatalog.map(({ to }) => to))
+const contentRouteSet = new Set(contentCatalog.map(({ to }) => to))
 
 const ownerName = 'wonbadon'
 
@@ -63,6 +67,23 @@ export default function Layout({ children }) {
   const { pathname } = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
   const isHome = pathname === '/'
+  const isToolPage = toolRouteSet.has(pathname)
+  const isContentPage = contentRouteSet.has(pathname)
+  const shouldShowSupportCta = pathname === '/guide' || pathname === '/faq' || pathname === '/about'
+
+  const adSlot = isHome
+    ? adsConfig.slots.home
+    : isToolPage
+      ? adsConfig.slots.page
+      : isContentPage
+        ? adsConfig.slots.content
+        : adsConfig.slots.page
+
+  const adLabel = isHome
+    ? '首頁贊助廣告'
+    : isToolPage
+      ? '工具頁贊助廣告'
+      : '內容頁贊助廣告'
 
   const desktopNavClass = (to) => {
     return pathname === to
@@ -143,9 +164,14 @@ export default function Layout({ children }) {
         {children}
       </main>
 
+      {shouldShowSupportCta && (
+        <SupportCta className="mx-auto mt-2 max-w-6xl px-4 sm:px-6" />
+      )}
+
       <AdSlot
         key={isHome ? 'home-ad-slot' : `page-ad-slot-${pathname}`}
-        slot={isHome ? adsConfig.slots.home : adsConfig.slots.page}
+        slot={adSlot}
+        label={adLabel}
         className={isHome
           ? 'mx-auto mt-2 max-w-6xl px-4 pb-4 sm:px-6'
           : 'mx-auto mt-2 max-w-6xl px-4 sm:px-6'}

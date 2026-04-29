@@ -64,6 +64,7 @@ npm run sync:site -- "你的提交訊息"
 	- `VITE_ADSENSE_CLIENT`
 	- `VITE_ADSENSE_HOME_SLOT`
 	- `VITE_ADSENSE_PAGE_SLOT`
+	- `VITE_ADSENSE_CONTENT_SLOT`
 
 4. 填入你的 AdSense client 與 slot id
 5. 重新 build 或直接同步網站
@@ -77,6 +78,7 @@ VITE_ADS_PROVIDER=adsense
 VITE_ADSENSE_CLIENT=ca-pub-1234567890123456
 VITE_ADSENSE_HOME_SLOT=1234567890
 VITE_ADSENSE_PAGE_SLOT=0987654321
+VITE_ADSENSE_CONTENT_SLOT=1122334455
 ```
 
 開發時如果你想先看版位而不是真的載廣告，可以把 `VITE_ADS_DEBUG=true`，頁面會顯示 placeholder。
@@ -85,9 +87,46 @@ GitHub Pages 正式站會使用 workflow 裡帶入的 Actions Variables；如果
 
 ### 版位策略
 
-- 首頁：完整工具庫下方、footer 上方一塊。
-- 工具頁：主內容結束後、免責聲明前一塊。
+- 首頁：完整工具庫下方、footer 上方一塊，吃最高流量但不擋主功能。
+- 工具頁：主內容結束後、免責聲明前一塊，保留使用者先完成試算。
+- 內容頁：FAQ / Guide / About 這類說明頁用獨立 content slot，避免和工具頁混用成效。
 - 不建議：輸入欄位中間、結果主卡上方、sticky 滿版廣告。這種會直接傷使用者完成率與 SEO。
+
+## 第二變現入口
+
+除了 AdSense，這個 repo 也內建了第二個變現骨架：合作 CTA。
+
+適合放的內容：
+
+- 法律諮詢合作
+- 人資 / 記帳 / 薪資系統導流
+- 申訴文件包或進階模板下載
+
+對應的 Actions Variables：
+
+- `VITE_LEAD_CTA_ENABLED`
+- `VITE_LEAD_CTA_DEBUG`
+- `VITE_LEAD_CTA_TITLE`
+- `VITE_LEAD_CTA_BODY`
+- `VITE_LEAD_CTA_PRIMARY_LABEL`
+- `VITE_LEAD_CTA_PRIMARY_URL`
+- `VITE_LEAD_CTA_SECONDARY_LABEL`
+- `VITE_LEAD_CTA_SECONDARY_URL`
+
+建議先這樣填：
+
+```bash
+VITE_LEAD_CTA_ENABLED=true
+VITE_LEAD_CTA_DEBUG=false
+VITE_LEAD_CTA_TITLE=需要進一步人工協助？
+VITE_LEAD_CTA_BODY=如果你的案件已經超出一般試算範圍，可以整理資料後進一步預約人工諮詢或下載進階資源。
+VITE_LEAD_CTA_PRIMARY_LABEL=前往合作諮詢
+VITE_LEAD_CTA_PRIMARY_URL=https://你的表單或合作頁
+VITE_LEAD_CTA_SECONDARY_LABEL=下載進階資源
+VITE_LEAD_CTA_SECONDARY_URL=https://你的模板或商品頁
+```
+
+這個 CTA 目前會優先顯示在 Guide、FAQ、About 這些高意圖內容頁，不會硬插進計算流程中間。
 
 ### 實際要注意的事
 

@@ -11,7 +11,7 @@ function applyBuildEnv(mode = 'production') {
   const loadedEnv = loadEnv(mode, projectRoot, '')
 
   Object.entries(loadedEnv).forEach(([key, value]) => {
-    if (!(key in process.env)) {
+    if (!(key in process.env) || process.env[key] === '') {
       process.env[key] = value
     }
   })

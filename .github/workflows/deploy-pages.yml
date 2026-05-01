@@ -106,6 +106,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.repository == 'wonbadon/wonbadon.github.io'
     runs-on: ubuntu-latest
 
     environment:
